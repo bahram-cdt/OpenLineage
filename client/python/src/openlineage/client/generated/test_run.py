@@ -22,15 +22,17 @@ class TestExecution(RedactMixin):
     """
     status: str
     """
-    The actual outcome of the test execution. Common values: 'pass' (test succeeded), 'fail' (test found
-    issues), 'skip' (test was not executed).
+    Whether the test found issues: 'pass' (no issues found), 'fail' (issues found), 'skip' (not
+    executed). Independent of severity — a test can fail without blocking the pipeline when severity is
+    'warn'.
 
     Example: pass
     """
     severity: str | None = attr.field(default=None)
     """
-    The configured severity level of the test. Determines whether a failure blocks pipeline execution
-    ('error') or produces a warning only ('warn').
+    The configured consequence of a test failure: 'error' (blocks pipeline execution) or 'warn'
+    (produces a warning only, does not block). A test with severity 'warn' and status 'fail' means
+    issues were found but execution continued.
 
     Example: error
     """
